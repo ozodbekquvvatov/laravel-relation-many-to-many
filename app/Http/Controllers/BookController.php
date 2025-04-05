@@ -73,11 +73,16 @@ class BookController extends Controller
             'description' => $request->description
         ]);
     
-        $book->authors()->sync($request->authors);
+        $book->authors()->detach();
     
-        return redirect()->route('books.index')->with('success', 'Kitob yangilandi!');
+        if ($request->has('authors')) {
+            $book->authors()->attach($request->authors);
+        }
+    
+        return redirect()->route('books.index')->with('success', 'Kitob va mualliflar yangilandi!');
     }
     
+
     
     /**
      * Remove the specified resource from storage.
@@ -88,9 +93,11 @@ public function destroy(string $id)
 {
     $book = Book::findOrFail($id);
 
+    $book->authors()->detach();
+
     $book->delete();
 
-    return redirect()->route('books.index');;
+    return redirect()->route('books.index')->with('success', 'Kitob va uning mualliflari o\'chirildi.');
 }
 
 }
