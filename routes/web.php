@@ -9,3 +9,18 @@ Route::get('/', function () {
 })->name('dashboard');
 Route::resource('books', BookController::class)->names('books');
 Route::resource('authors', AuthorController::class)->names('authors');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
