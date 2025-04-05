@@ -27,18 +27,16 @@
         <div class="mb-3">
             <label for="authors" class="form-label">Mualliflarni Tanlang</label>
             <select name="authors[]" id="authors" class="form-select" multiple>
-                @foreach ($authors as $author)
-                    <option value="{{ $author->id }}"
-                        {{ in_array($author->id, $book->authors->pluck('id')->toArray()) ? 'selected' : '' }}>
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}" 
+                            {{ isset($book) && $book->authors->contains($author->id) ? 'selected' : '' }}>
                         {{ $author->name }}
                     </option>
                 @endforeach
             </select>
-
-            <div class="form-text">Bir nechta muallif tanlash uchun <strong>CTRL</strong> tugmasini bosib turib
-                tanlang.</div>
+            <div class="form-text">Bir nechta muallif tanlash uchun <strong>CTRL</strong> tugmasini bosib turib tanlang.</div>
         </div>
-
+        
         <button type="submit" class="btn btn-primary">Tahrirlash</button>
     </form>
 </div>
