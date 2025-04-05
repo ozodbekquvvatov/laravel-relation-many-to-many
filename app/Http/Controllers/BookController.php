@@ -78,6 +78,7 @@ class BookController extends Controller
         return redirect()->route('books.index')->with('success', 'Kitob yangilandi!');
     }
     
+    
     /**
      * Remove the specified resource from storage.
      */
