@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthorCreateRequest;
+use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Requests\AuthorCreateRequest;
 
 class AuthorController extends Controller
 {
@@ -13,30 +14,40 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
+        $authors = Author::with('books')->get(); 
+    
         return view('authors.index', compact('authors'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('authors.create');
-    }
+{
+    // Kitoblar ro'yxatini olish
+    $books = Book::all();
+
+    // 'authors.create' view'ga kitoblar ro'yxatini uzatish
+    return view('authors.create', compact('books'));
+}
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AuthorCreateRequest $request)
-    {
+    public function store(Request $request)
+{
+    $author = Author::create([
+        'name' => $request->name,
+    ]);
 
-        Author::create([
-            'name' => $request->name, 
-        ]);
-    
-        return redirect()->route('authors.index');
+    if ($request->has('books')) {
+        $author->books()->attach($request->books); 
     }
+
+    return redirect()->route('authors.index');
+}
+
     
 
     /**
