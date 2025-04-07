@@ -15,13 +15,13 @@
         <div class="mb-3">
             <label for="title" class="form-label">Kitob Nomi</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Kitob nomini kiriting"
-                value="{{ $book->title }}" required>
+                value="{{ $book->title }}" >
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Kitob Tavsifi</label>
             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Kitob tavsifini kiriting"
-                required>{{ $book->description }}</textarea>
+                >{{ $book->description }}</textarea>
         </div>
 
         <div class="mb-3">
@@ -40,6 +40,7 @@
         <button type="submit" class="btn btn-primary">Tahrirlash</button>
     </form>
 </div>
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
