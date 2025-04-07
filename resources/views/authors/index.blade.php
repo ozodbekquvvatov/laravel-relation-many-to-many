@@ -5,14 +5,13 @@
 @section('content')
 <div class="container mt-5">
     <a href="{{ route('dashboard') }}" class="btn btn-secondary mb-3">Dashboard</a>
-
     <h2 class="mb-4">Mualliflar</h2>
     <a href="{{ route('authors.create') }}" class="btn btn-primary mb-3">Muallif Yaratish</a>
-
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Muallif Nomi</th>
+                <th>Biografiyasi</th> 
                 <th>Kitoblar</th>
                 <th>Amallar</th>
             </tr>
@@ -21,13 +20,14 @@
             @foreach ($authors as $author)
                 <tr>
                     <td>{{ $author->name }}</td>
+                    <td>{{ $author->biography ?: 'Biografiya mavjud emas' }}</td>
                     <td>
                         @if($author->books->isEmpty())
                             <span>Kitoblar mavjud emas</span>
                         @else
                             <ul>
                                 @foreach($author->books as $book)
-                                    <li>{{ $book->title }}</li> <!-- Kitob nomi -->
+                                    <li>{{ $book->title }}</li>
                                 @endforeach
                             </ul>
                         @endif
@@ -46,4 +46,15 @@
         </tbody>
     </table>
 </div>
+
+
+@if ($errors->any())
+<div class="alert alert-danger mt-3">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 @endsection
