@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthorCreateRequest;
+use App\Http\Requests\AuthorUpdateRequest;
 
 class AuthorController extends Controller
 {
@@ -35,18 +36,21 @@ class AuthorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-{
-    $author = Author::create([
-        'name' => $request->name,
-    ]);
-
-    if ($request->has('books')) {
-        $author->books()->attach($request->books); 
+    public function store(AuthorCreateRequest $request)
+    {
+        $author = Author::create([
+            'name' => $request->name,
+            'biography' => $request->biography,
+        ]);
+    
+  
+            // attach emas, sync ishlatiladi, chunki u takrorlanmaydi
+            $author->books()->sync($request->books);
+       
+    
+        return redirect()->route('authors.index');
     }
-
-    return redirect()->route('authors.index');
-}
+    
 
     
 
@@ -66,25 +70,29 @@ class AuthorController extends Controller
      */
     public function edit(string $id)
     {
-        $author = Author::findOrFail($id);
-
-        return view('authors.edit', compact('author'));
+        $author = Author::with('books')->findOrFail($id);
+        $books = Book::all(); // Barcha kitoblar
+    
+        return view('authors.edit', compact('author', 'books'));
     }
 
     /**
      * Update the specified resource in storage.
      */
   
-     public function update(Request $request, string $id)
+     public function update(AuthorUpdateRequest $request, string $id)
      {
          $author = Author::findOrFail($id);
-     
          $author->update([
              'name' => $request->name,
+             'biography' => $request->biography
          ]);
+         
+         $author->books()->sync(ids: $request->books); // detach ham ishlayddi, ham update ishlaydi  
      
          return redirect()->route('authors.index');
      }
+     
      
     /**
      * Remove the specified resource from storage.
@@ -92,6 +100,7 @@ class AuthorController extends Controller
     public function destroy(string $id)
     {
         $author = Author::findOrFail($id); 
+        $author->books()->detach(); 
         $author->delete();
         return redirect()->route('authors.index');
     }
