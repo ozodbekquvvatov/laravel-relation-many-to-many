@@ -7,12 +7,17 @@
 
         <form action="{{ route('authors.store') }}" method="POST">
             @csrf
-
+        
             <div class="mb-3">
                 <label for="name" class="form-label">Muallif Nomi</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
             </div>
-
+        
+            <div class="mb-3">
+                <label for="biography" class="form-label">Biografiya</label>
+                <textarea class="form-control" id="biography" name="biography" rows="4">{{ old('biography') }}</textarea>
+            </div>
+        
             <div class="mb-3">
                 <label for="books" class="form-label">Kitoblar Tanlash</label>
                 <select name="books[]" id="books" class="form-select" multiple>
@@ -22,9 +27,10 @@
                 </select>
                 <div class="form-text">Bir nechta kitob tanlash uchun <strong>CTRL</strong> tugmasini bosib turib tanlang.</div>
             </div>
-
+        
             <button type="submit" class="btn btn-primary">Saqlash</button>
         </form>
+        
     </div>
 
     @if ($errors->any())
