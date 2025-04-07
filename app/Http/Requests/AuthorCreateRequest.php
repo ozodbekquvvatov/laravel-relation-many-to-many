@@ -24,6 +24,9 @@ class AuthorCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:authors,name',  
+            'biography' => 'nullable|string',
+            'books' => 'nullable|array',
+            'books.*' => 'exists:books,id', // Har bir kitob ID'si mavjudligini tekshiradi
         ];
     }
 }
