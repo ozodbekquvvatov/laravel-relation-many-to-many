@@ -9,7 +9,7 @@ class Author extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name']; 
+    protected $fillable = ['name','biography']; 
 public function books()
 {
     return $this->belongsToMany(Book::class);
