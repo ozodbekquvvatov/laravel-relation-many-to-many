@@ -19,7 +19,7 @@
             @foreach ($books as $book)
                 <tr>
                     <td>{{ $book->title }}</td>
-                    <td>{{ $book->description }}</td>
+                    <td>{{ $book->description}}</td>
                     <td>
                         @if ($book->authors->isEmpty())
                             Muallif topilmadi
@@ -42,6 +42,16 @@
         </tbody>
     </table>
 </div>
+
+@if ($errors->any())
+<div class="alert alert-danger mt-3">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 @endsection
 
 
