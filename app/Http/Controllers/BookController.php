@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookCreateRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
@@ -66,20 +67,15 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(BookUpdateRequest $request, Book $book)
     {
         $book->update([
             'title' => $request->title,
             'description' => $request->description
         ]);
     
-        $book->authors()->detach();
-    
-        if ($request->has('authors')) {
-            $book->authors()->attach($request->authors);
-        }
-    
-        return redirect()->route('books.index')->with('success', 'Kitob va mualliflar yangilandi!');
+        $book->authors()->sync($request->authors ); // detach ham ishlayddi, ham update ishlaydi  
+        return redirect()->route('books.index');
     }
     
 
