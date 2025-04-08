@@ -22,9 +22,9 @@ class AuthorUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'authors' => 'required|array|min:1',
+            'name' => 'required|string|max:255',
+            'biography' => 'nullable|string',
+            'books' => 'required|array|min:1',
             'books.*' => 'exists:books,id',
         ];
     }
