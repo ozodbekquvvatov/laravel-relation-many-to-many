@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookCreateRequest;
-use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 
 class BookController extends Controller
 {
@@ -32,7 +32,7 @@ class BookController extends Controller
      */
 
 
-     public function store(BookCreateRequest $request)
+     public function store(BookStoreRequest $request)
      {
          $book = Book::create([
              'title' => $request->input('title'),  
