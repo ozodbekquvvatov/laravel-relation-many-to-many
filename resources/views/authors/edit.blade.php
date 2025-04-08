@@ -33,10 +33,7 @@
                 @endforeach
             </select>
             
-    @error('books')
-    <div class="text-danger mt-1">{{ $message }}</div>
-@enderror
-            <div class="form-text">Bir nechta kitob tanlash uchun <strong>CTRL</strong> (yoki Mac uchun CMD) tugmasini bosib turib tanlang.</div>
+   <div class="form-text">Bir nechta kitob tanlash uchun <strong>CTRL</strong> (yoki Mac uchun CMD) tugmasini bosib turib tanlang.</div>
         </div>
         
         <button type="submit" class="btn btn-primary">Saqlash</button>
