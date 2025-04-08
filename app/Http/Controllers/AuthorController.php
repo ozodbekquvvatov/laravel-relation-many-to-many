@@ -85,7 +85,9 @@ class AuthorController extends Controller
          $author = Author::findOrFail($id);
          $author->update([
              'name' => $request->name,
-             'biography' => $request->biography
+             'biography' => $request->biography,
+             'authors' => $request->authors,
+             
          ]);
          
          $author->books()->sync(ids: $request->books); // detach ham ishlayddi, ham update ishlaydi  
